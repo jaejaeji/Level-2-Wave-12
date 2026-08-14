@@ -43,7 +43,7 @@ let item1Price = 19.99;
 let item2Price = 34.99;
 let orderTotal = item1Price + item2Price;
 console.log("Total: $" + orderTotal);
-
+ 
 // ----------------------------------------------------------
 // 🔴 DEBUG 3 — Hard
 // ----------------------------------------------------------

@@ -62,7 +62,7 @@ console.log(favoriteMovie); //undefined
 
 favoriteMovie = "007 Casino";
 console.log(favoriteMovie);
-
+ 
 // ----------------------------------------------------------
 // TASK 4 — Build a product listing
 // ----------------------------------------------------------
