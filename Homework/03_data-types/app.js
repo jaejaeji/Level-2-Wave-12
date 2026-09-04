@@ -79,7 +79,7 @@ const cleanEmail = customerEmail.trim().toLowerCase();
 
 console.log(`Email: ${cleanEmail}`);
 
-const cleanCode = discountCode.trim().toLowerCase();
+const cleanCode = discountCode.trim().toUpperCase(); //used toLowerCase() instead of toUpperCase() --- IGNORE ---
 
 console.log(`Discount code: ${cleanCode}`);
 
@@ -150,7 +150,7 @@ const line2Total = price2 * item2Qty;
 console.log(`${item2Name} x ${item2Qty} = $${line2Total.toFixed(2)}`);
 
 const line3Total = price3 * item3Qty;
-console.log(`${item3Name} x ${item3Qty} = $${line3Total.toFixed(3)}`);
+console.log(`${item3Name} x ${item3Qty} = $${line3Total.toFixed(2)}`); //used .tofixed(3) instead of .tofixed(2) --- IGNORE ---
 
 const subtotal = line1Total + line2Total + line3Total;
 console.log (`Subtotal: $${subtotal.toFixed(2)}`);

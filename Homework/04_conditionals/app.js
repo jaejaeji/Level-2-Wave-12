@@ -55,6 +55,7 @@ if(isExtraCredit) {
     console.log(`No extra credit.`);
 }
 
+console.log(`Final earned score: ${earnedScore}`); // Remember to log finalScore
 
 // ----------------------------------------------------------
 // TASK 3 — Calculate the percentage (operators)

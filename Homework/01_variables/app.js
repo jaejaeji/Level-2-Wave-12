@@ -115,9 +115,9 @@ console.log("In stock: " + inStock);
 const secondPlayer = "John";
 let myScore = 89;
 let health = 100;
-let GameLevel = 2;
+let gameLevel = 2; // Use gameLevel instead of GameLevel
 
-console.log(secondPlayer, myScore, health, GameLevel);
+console.log(secondPlayer, myScore, health, gameLevel);
 
 // ----------------------------------------------------------
 // TASK 7 — Two-step declaration
@@ -133,14 +133,14 @@ console.log(secondPlayer, myScore, health, GameLevel);
 //
 // You should see three console lines: undefined → 500 → 750
 
-let highscore;
-console.log(highscore);
+let highScore; //highscore should be camelCased; highScore is the correct variable name
+console.log(highScore);
 
-highscore = 500;
-console.log(highscore);
+highScore = 500;
+console.log(highScore);
 
-highscore = 750;
-console.log(highscore);
+highScore = 750;
+console.log(highScore);
 
 
 // ----------------------------------------------------------
@@ -155,7 +155,7 @@ console.log(highscore);
 // Expected format: "TaskMaster v3 — built by [your name]"
 
 const appName = "TaskMaster";
-let version = 3;
+const version = 3; //use const instead of let
 const authorName = "Jae";
 
 console.log(appName + " v" + version + " — built by " + authorName);

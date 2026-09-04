@@ -42,7 +42,7 @@ console.log(gameName + " - Player: " + playerName);
 // Log: "Earned: " + totalEarned + " points"
 // Log: "Score: " + playerScore
 
-let totalEarned = 6 * pointsPerKill;
+const totalEarned = 6 * pointsPerKill; //can be const instead of let, variables no need to change
 playerScore += totalEarned;
 
 console.log("Earned: " + totalEarned + " points");
@@ -111,7 +111,7 @@ console.log(playerScore > highScore); //False
 
 highScore = playerScore;
 
-console.log("New high score: " + highScore); //False
+console.log("New high score: " + highScore); //225
 
 
 // ----------------------------------------------------------
