@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Popup Contact Form</title>
+<style>
+  :root { --bg:#fff; --fg:#1a1a1a; --card:#fff; --border:#d1d5db; --accent:#2563eb; box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#16181d; --fg:#eceff4; --card:#242831; --border:#3b4252; --accent:#7aa2ff; } }
+  :root[data-theme="dark"] { --bg:#16181d; --fg:#eceff4; --card:#242831; --border:#3b4252; --accent:#7aa2ff; }
+  body { background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; max-width:640px; margin:0 auto; padding:20px; line-height:1.5; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-size:1rem; cursor:pointer; }
+
+  /* The overlay covers the whole screen and dims the page behind the popup. */
+  .overlay {
+    position: fixed;            /* stays put even if the page scrolls */
+    inset: 0;                   /* shorthand for top/right/bottom/left: 0 */
+    background: rgba(0,0,0,0.5);
+    display: none;              /* hidden by default */
+    align-items: center;        /* flexbox centers the popup vertically... */
+    justify-content: center;    /* ...and horizontally */
+    padding: 16px;
+  }
+  /* JavaScript adds this class to show the overlay. Toggling a class is the key trick. */
+  .overlay.open { display: flex; }
+
+  .popup { background:var(--card); border-radius:12px; padding:20px; width:100%; max-width:400px; }
+  .popup label { display:block; margin-top:12px; font-weight:600; }
+  .popup input, .popup textarea {
+    width:100%; box-sizing:border-box; padding:8px; margin-top:4px;
+    border:1px solid var(--border); border-radius:6px; font:inherit; background:transparent; color:inherit;
+  }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .close { background:transparent; color:var(--fg); font-size:1.4rem; padding:0 6px; }
+</style>
+</head>
+<body>
+  <h1>Welcome to my site</h1>
+  <p>Some page content lives here. Click below to open the contact form.</p>
+  <button id="openBtn">Contact me</button>
+
+  <!-- The overlay wraps the popup. It starts hidden because of the CSS above. -->
+  <div class="overlay" id="overlay">
+    <div class="popup">
+      <div class="row">
+        <h2>Contact me</h2>
+        <button class="close" id="closeBtn" aria-label="Close">&times;</button>
+      </div>
+
+      <!-- A form groups inputs. Each label's "for" matches an input's "id" so clicking the label focuses the input. -->
+      <form id="contactForm">
+        <label for="name">Name</label>
+        <input id="name" type="text" required>
+
+        <label for="email">Email</label>
+        <input id="email" type="email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" rows="4" required></textarea>
+
+        <p><button type="submit">Send</button></p>
+      </form>
+      <p id="status"></p>
+    </div>
+  </div>
+
+  <script>
+    // Grab every element we need to control, once, up front.
+    const overlay = document.getElementById("overlay");
+    const openBtn = document.getElementById("openBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("status");
+
+    // Opening = adding the "open" class, which flips display:none to display:flex.
+    openBtn.addEventListener("click", function () {
+      overlay.classList.add("open");
+    });
+
+    // Closing = removing that same class.
+    closeBtn.addEventListener("click", function () {
+      overlay.classList.remove("open");
+    });
+
+    // The submit event fires when the form is sent (button click or Enter key).
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();   // stop the browser's default behavior of reloading the page
+      // A real site would send the data to a server here. We just show a message.
+      status.textContent = "Thanks! (Nothing was actually sent, this is a demo.)";
+    });
+  </script>
+</body>
+</html>
