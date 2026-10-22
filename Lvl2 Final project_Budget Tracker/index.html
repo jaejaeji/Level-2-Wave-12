@@ -14,31 +14,52 @@
         </div>
     
         <div class="header-center">
-            <span class="navBtn">Home</span>
-            <span class="navBtn">Transactions</span>
+            <a class="navBtn" href="index.html">Home</a>
+            <a class="navBtn" href="transactions.html">Transactions</a>
         </div>
 
         <div class="header-right">
-            <span class="darkmodeBtn">🌙 Dark Mode</span>
+            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
         </div>
     </header>
 
-    <main class="layout">
+    <main class="layout" id="layout">
 
     <!-- Summary Board -->
     <div class="board summary">
-        <div class="overview-top">
+        <div class="summary-top">
             <h2>Month Overview</h2>
         </div>
         
-        <div class="overview-mid">
-            <span>Balance: $10,000 </span>
-            <span>Income: $10,000 </span>
-            <span>Currency(1 USD to KRW): ₩1,400</span>
+        <div class="summary-mid">
+            <span class="summary-box">Current Balance</br></br>
+                <span class="summary-number" id="balance-total"> $0 </span>
+            </span>
+            <span class="summary-box">Income</br></br>
+                <span class="summary-number" id="income-total"> $0 </span>
+            </span>
+            <span class="summary-box">Total Savings</br></br>
+                <span class="summary-number" id="savings-total"> $0 </span>
+            </span>
+            <span class="summary-box">Currency</br>
+                <span id="currency-conversion"> (1 USD to KRW) </span>
+                <span class="summary-number" id="currency-result"> ₩1,400 </span>
+                <button id="currency-reverse">⇆</button>
+            </span>
         </div>
 
-        <div class="overview-low">
-            <span>Expenses: $8,000 (Budget: $9,000) </span>
+        <div class="summary-low">
+            <div class="summary-lowbox">
+                <div class="summary-lowTextBox">
+                    <span class="summary-lowText" id="currentExpenses">Expenses: $0</span>
+                    <span class="summary-lowText" id="currentBudget">Budget: $0</span>
+                    <span class="summary-lowText" id="budgetLeft">Budget Left: $0</span>
+                </div>
+                <div class="bar">
+                    <i id="housingBar" style="width: 62.5%; background: green"></i>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -46,21 +67,81 @@
 
     <div class="board category">
         <h2>Spending By Category</h2>
-        <span>Housing: $2,000</span>
+        <div>Housing: $2,000</div>
+        <div class="bar">
+            <i id="housingBar" style="width: 62.5%; background: red"></i>
+        </div>
+        <div>Bills: $2,000</div>
+        <div class="bar">
+            <i id="billsBar" style="width: 52.5%; background: orange"></i>
+        </div>
+        <div>Food: $2,000</div>
+        <div class="bar">
+            <i id="foodBar" style="width: 22.5%; background: yellow"></i>
+        </div>
+        <div>Health: $2,000</div>
+        <div class="bar">
+            <i id="healthBar" style="width: 22.5%; background: green"></i>
+        </div>
+        <div>Transport: $2,000</div>
+        <div class="bar">
+            <i id="transportBar" style="width: 32.5%; background: blue"></i>
+        </div>
+        <div>Entertainment: $2,000</div>
+        <div class="bar">
+            <i id="entertainmentBar" style="width: 12.5%; background: purple"></i>
+        </div>
+        <div>Other: $2,000</div>
+        <div class="bar">
+            <i id="otherBar" style="width: 12.5%; background: violet"></i>
+        </div>
+
     </div>
 
     <!-- Recent Transactions -->
 
     <div class="board transactions">
-        <h2>Recent Transactions</h2>
-        <span>Rent: $2,000 </span>
+    <div class="transaction-top">
+        <h2 class="transaction-title">Recent Transactions</h2>
+    </div>
+
+    <div class="title-row">
+        <div class="row1">Date</div>
+        <div class="row1">Type</div>
+        <div class="row1">Description</div>
+        <div class="row1">Category</div>
+        <div class="row1">Amount ($)</div>
+    </div>
+    <div class="transactionRows" id="transactionRows"></div>
+    </div>
+
+    <!-- Popup Contact Form -->
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <div class="popup-top">
+                <h2>Contact Us</h2>
+                <button class="closeBtn" id="closeBtn">x</button>
+            </div>
+            <form id="contactForm">
+                <label for="name">Name</label>
+                <input id="name" type="text" required required placeholder="Name">
+                <label for="email">Email</label>
+                <input id="email" type="email" required placeholder="Email">
+                <label for="message">Message</label>
+                <textarea id="message" rows="7" required placeholder="Enter your message here."></textarea>
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </main>
 
-
     <footer>
         <p>&copy; 2026 Jae</p>
-        <span id="contact" class="contact-form"><a>Contact form</a></span>
+        <span id="contactBtn" class="contactBtn">Contact form</span>
     </footer>
 
+    <script src="app.js"></script>
   </body>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="header">
+        <div class="header-left">
+            <h1>Budget Tracker v01</h1>
+        </div>
+    
+        <div class="header-center">
+            <a class="navBtn" href="index.html">Home</a>
+            <a class="navBtn" href="transactions.html">Transactions</a>
+        </div>
+
+        <div class="header-right">
+            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
+        </div>
+    </header>
+
+    <main class="layout" id="layout">
+
+    <!-- Form Board -->
+    <div class="board Form">
+        <div class="form-top">
+            <h2>Add Transaction</h2>
+            <button id="clear-data">Clear Data</button>
+        </div>
+        
+        <div class="form-mid">
+            <form class="inputTransaction" id="inputTransaction">
+                <label for="type">Type</label>
+
+                <select id="type">
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                    <option value="savings">Savings</option>
+                </select>
+
+                <label for="date">Date </label>
+                <input id="date" type="text" placeholder="YYYY/MM/DD" required>
+
+                <label for="description">Description </label>
+                <input id="description" type="text" required>
+
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="housing">Housing</option>
+                    <option value="bills">Bills</option>
+                    <option value="food">Food</option>
+                    <option value="health">Health</option>
+                    <option value="transport">Transport</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="amount">Amount ($)</label>
+                <input id="amount" type="number" required>
+
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <form class="inputBudget" id="inputBudget">
+                <label for="budget">Budget: $<span id="currentBudget">0</span></label>
+                <input id="budget" type="number" required>
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            </span>
+        </div>
+
+    </div>
+
+    <!-- Transactions Board -->
+
+    <div class="board transactions">
+        <div class="transaction-top">
+            <h2 class="transaction-title">Transactions</h2>
+            <div class="allTabs">
+                <div class="tabs" id="allTab">All</div>
+                <div class="tabs" id="expensesTab">Expenses</div>
+                <div class="tabs" id="incomeTab">Income</div>
+                <div class="tabs" id="savingsTab">Savings</div>
+            </div>
+
+        </div>
+
+        <div class="title-row">
+            <div class="row1">Date</div>
+            <div class="row1">Type</div>
+            <div class="row1">Description</div>
+            <div class="row1">Category</div>
+            <div class="row1">Amount ($)</div>
+        </div>
+        <div class="transactionRows" id="transactionRows"></div>
+
+    </div>
+    </main>
+
+    <!-- Popup Contact Form -->
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <div class="popup-top">
+                <h2>Contact Us</h2>
+                <button class="closeBtn" id="closeBtn">x</button>
+            </div>
+            <form id="contactForm">
+                <label for="name">Name</label>
+                <input id="name" type="text" required>
+                <label for="email">Email</label>
+                <input id="email" type="email" required>
+                <label for="message">Message</label>
+                <textarea id="message" rows="7" required placeholder="Enter your message here."></textarea>
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Jae</p>
+        <span id="contactBtn" class="contactBtn">Contact form</span>
+    </footer>
+
+    <script src="transactions.js"></script>
+  </body>
