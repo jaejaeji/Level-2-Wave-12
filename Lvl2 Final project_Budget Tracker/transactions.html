@@ -19,7 +19,7 @@
         </div>
 
         <div class="header-right">
-            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
+            <span class="themeBtn" id="theme-btn">🌙 Dark Mode</span>
         </div>
     </header>
 
@@ -29,7 +29,6 @@
     <div class="board Form">
         <div class="form-top">
             <h2>Add Transaction</h2>
-            <button id="clear-data">Clear Data</button>
         </div>
         
         <div class="form-mid">
@@ -37,9 +36,8 @@
                 <label for="type">Type</label>
 
                 <select id="type">
-                    <option value="expense">Expense</option>
                     <option value="income">Income</option>
-                    <option value="savings">Savings</option>
+                    <option value="expense">Expense</option>
                 </select>
 
                 <label for="date">Date </label>
@@ -67,7 +65,7 @@
                 </div>
             </form>
             <form class="inputBudget" id="inputBudget">
-                <label for="budget">Budget: $<span id="currentBudget">0</span></label>
+                <label for="budget">Budget ($)</label>
                 <input id="budget" type="number" required>
                 <div class="submit-button">
                     <button type="submit">Submit</button>
@@ -81,25 +79,14 @@
     <!-- Transactions Board -->
 
     <div class="board transactions">
-        <div class="transaction-top">
-            <h2 class="transaction-title">Transactions</h2>
-            <div class="allTabs">
-                <div class="tabs" id="allTab">All</div>
-                <div class="tabs" id="expensesTab">Expenses</div>
-                <div class="tabs" id="incomeTab">Income</div>
-                <div class="tabs" id="savingsTab">Savings</div>
-            </div>
-
-        </div>
-
+        <h2 class="transaction-title">Transactions</h2>
         <div class="title-row">
             <div class="row1">Date</div>
-            <div class="row1">Type</div>
             <div class="row1">Description</div>
             <div class="row1">Category</div>
             <div class="row1">Amount ($)</div>
         </div>
-        <div class="transactionRows" id="transactionRows"></div>
+        <div class="transactionRows" id="transactionRows">sssSS</div>
 
     </div>
     </main>

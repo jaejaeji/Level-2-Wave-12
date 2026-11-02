@@ -4,29 +4,9 @@ function handleThemeToggle() {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
     const themeBtn = document.getElementById("themeBtn");
-
-    if (isDark) {
-        themeBtn.textContent = "☀️ Light Mode";
-        const darkMode = localStorage.setItem("darkMode", JSON.stringify(isDark));
-    } else {
-        themeBtn.textContent = "🌙 Dark Mode";
-        const darkMode = localStorage.setItem("darkMode", JSON.stringify(isDark));
-    }
 }
 
-function loadTheme() {
-    const isDark = JSON.parse(localStorage.getItem("darkMode"));
-
-    if (isDark) {
-        themeBtn.textContent = "☀️ Light Mode";
-        document.body.classList.toggle("dark");
-    } else {
-        themeBtn.textContent = "🌙 Dark Mode";
-    }
-}
-
-document.getElementById("themeBtn").addEventListener("click", handleThemeToggle);
-
+document.getElementById("theme-btn").addEventListener("click", handleThemeToggle);
 
 // CONTACT FORM - Open/Close
 const overlay = document.getElementById("overlay");
@@ -62,12 +42,7 @@ document.getElementById("contactForm").addEventListener("submit", function(event
 
 // Transaction Values - Input
 
-let allTransactionData = [];
-
-const getTransactions = JSON.parse(localStorage.getItem("transactionData"));
-if (getTransactions !== null) {
-    allTransactionData = getTransactions;
-}
+const allTransactionData = [];
 
 document.getElementById("inputTransaction").addEventListener("submit", function(event){
     event.preventDefault();
@@ -87,60 +62,25 @@ document.getElementById("inputTransaction").addEventListener("submit", function(
         amount: amount
     };
 
-    createRow(transactionData);
+    transactionData.forEach((key) => {
+        const keyArray = [];
+        keyArray.append(key);
+        console.log(keyArray);
+    });
 
     allTransactionData.push(transactionData);
-    saveTransactions(allTransactionData);
-    // console.log(allTransactionData);
 
+    console.log(allTransactionData);
+
+    createRow(allTransactionData);
 })
 
 const createRow = function(data){
-    const dateEl = document.createElement("div");
-    const typeEl = document.createElement("div");
-    const descriptionEl = document.createElement("div");
-    const categoryEl = document.createElement("div");
-    const amountEl = document.createElement("div");
-
-    dateEl.textContent = data.date;
-    typeEl.textContent = data.type;
-    descriptionEl.textContent = data.description;
-    categoryEl.textContent = data.category;
-    amountEl.textContent = "$" + data.amount;
-
-    dateEl.classList.add("row2");
-    typeEl.classList.add("row2");
-    descriptionEl.classList.add("row2");
-    categoryEl.classList.add("row2");
-    amountEl.classList.add("row2");
-
-    const divWrap = document.createElement("div");
-    divWrap.classList.add("divWrap");
-
-    divWrap.appendChild(dateEl);
-    divWrap.appendChild(typeEl);
-    divWrap.appendChild(descriptionEl);
-    divWrap.appendChild(categoryEl);
-    divWrap.appendChild(amountEl);
-
-    document.getElementById("transactionRows").appendChild(divWrap);
-
+    const li = document.createElement("li");
+    li.append(data);
+    document.getElementById("transactionRows").appendChild(li);
 }
 
-const saveTransactions = function(data){
-    const savedTransactions = localStorage.setItem("transactionData", JSON.stringify(data));
-    console.log("Transaction data saved");
-}
-
-const loadTransactions = function(){
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    // console.log(savedTransactions);
-    if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => createRow(data));
-    } else {
-        return;
-    }
-}
 
 
 // Budget Value - Input
@@ -148,101 +88,6 @@ const loadTransactions = function(){
 document.getElementById("inputBudget").addEventListener("submit", function(event){
     event.preventDefault();
     const budget = document.getElementById("budget").value;
-    // console.log(`budget: $${budget}`);
-
-    document.getElementById("currentBudget").textContent = budget;
-
-    saveBudget(budget);
+    console.log(`budget: $${budget}`);
 })
 
-const saveBudget = function(data){
-    const savedBudget = localStorage.setItem("budgetData", JSON.stringify(data));
-    console.log("Budget data saved");
-}
-
-const loadBudget = function(data){
-    const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
-    // console.log(savedBudget);
-    if (savedBudget !== null) {
-        document.getElementById("currentBudget").textContent = savedBudget;
-    } else {
-        return;
-    }
-}
-
-
-const loadData = function(){
-    loadTheme();
-    loadTransactions();
-    loadBudget();
-}
-
-loadData();
-
-// Clear Data
-
-document.getElementById("clear-data").addEventListener("click", function(event){
-    // localStorage.clear();
-
-    localStorage.removeItem("transactionData");
-    localStorage.removeItem("budgetData");
-
-    window.location.reload();
-    console.log("localStorage is cleared")
-
-})
-
-// Show Transactions by Type Tab
-
-const loadType = function(type){
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-
-    if (savedTransactions !== null) {
-        const filteredTransactions = savedTransactions.filter((transaction) => {
-            return transaction.type === type;
-        })
-
-        filteredTransactions.forEach((data) => createRow(data));
-
-        console.log(filteredTransactions);
-    }
-}
-
-document.getElementById("allTab").addEventListener("click", function(event){
-    event.preventDefault();
-
-    const transRows = document.getElementById("transactionRows");
-    transRows.innerHTML = "";
-
-    loadTransactions();
-})
-
-document.getElementById("expensesTab").addEventListener("click", function(event){
-    event.preventDefault();
-
-    const transRows = document.getElementById("transactionRows");
-    transRows.innerHTML = "";
-
-    loadType("expense");
-})
-
-document.getElementById("incomeTab").addEventListener("click", function(event){
-    event.preventDefault();
-
-    const transRows = document.getElementById("transactionRows");
-    transRows.innerHTML = "";
-
-    loadType("income");
-})
-
-document.getElementById("savingsTab").addEventListener("click", function(event){
-    event.preventDefault();
-
-    const transRows = document.getElementById("transactionRows");
-    transRows.innerHTML = "";
-
-    loadType("savings");
-})
-
-
-// function

@@ -62,15 +62,13 @@ body.dark .header { background-color: var(--sidebar); color: var(--text-secondar
 body.dark .navBtn:hover { color: var(--primary-hover) }
 body.dark .popup-top button,
 body.dark .submit-button button { background-color: var(--bg);}
-body.dark .themeBtn:hover,
+body.dark .theme:hover,
 body.dark .submit-button button:hover { background-color: var(--surface-hover); color: var(--gold-bright); }
 body.dark .layout h2 { color: var(--text); }
 body.dark .summary-number {color: var(--text); }
 body.dark .summary-box button {background-color: var(--surface); color: var(--text-secondary);}
 body.dark .board { background-color: var(--surface); color: var(--text-secondary); border: 2px solid var(--gold-bright);}
 body.dark .popup { background-color: var(--bg); color: var(--gold); }
-body.dark .tabs {    background-color: var(--c-success); color: var(--c-background); border:2px solid var(--c-accent); }
-body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
 
 /* HEADER */
 .header {
@@ -173,7 +171,7 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
 }
 
 .summary-box button {
-    background-color: var(--c-surface);
+    background-color: var(--c-background);
     color: var(--c-accent);
     border: 0;
     cursor: pointer;
@@ -181,38 +179,7 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
     font-family: "Charlemagne Bold", sans-serif, Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
     font-weight: 800;
-    transition: background-color 0.3s, border-color 0.3s;
 }
-
-.summary-lowbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--c-accent);
-    border-radius: 16px;
-    padding: 14px 12px;
-    margin: 16px auto;
-    height: 120px;
-    font-size: 16px;
-}
-
-.summary-lowTextBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.summary-lowText {
-    padding: 16px;
-}
-
-/* CATEGORY BOARD */
-.bar {
-    height:8px; background:lightgrey; border-radius:4px; overflow:hidden; margin:3px 0 10px;
-}
-
-.bar > i { display:block; height:100%; border-radius:4px; }
-
 
 /* POPUP CONTACT FORM */
 .overlay {
@@ -288,7 +255,7 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
 
 .submit-button button:hover {
     background-color: var(--c-secondary);
-    /* color: var(--c-primary-hover); */
+    color: var(--c-primary-hover);
 }
 
 
@@ -312,37 +279,7 @@ footer .contactBtn:hover {
 
 /* TRANSACTIONS PAGE */
 
-.allTabs {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
 /* SUBMIT FORMS */
-
-.form-top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.form-top button {
-    background-color: var(--c-error);
-    color: var(--c-warning);
-    border: 2px solid var(--c-accent);
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-
-    font-family: "Charlemagne Bold", sans-serif, Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.form-top button:hover {
-    background-color: #e4c1bd;
-    color: #d33826;
-}
 
 .form-box {
     display: flex;
@@ -362,10 +299,6 @@ footer .contactBtn:hover {
     flex-direction: column;
 }
 
-.inputBudget {
-    border-top: 1px solid;
-}
-
 .inputTransaction label,
 .inputBudget label {
     display: block;
@@ -383,15 +316,6 @@ footer .contactBtn:hover {
     border-radius:6px;
 }
 
-.form-mid select {
-    background-color: var(--c-surface);
-    color: var(--c-text);
-    padding: 10px;
-    border: 2px solid var(--c-border);
-    border-radius: 6px;
-    margin: 10px auto;
-}
-
 .form-mid .submit-button button {
     background-color: var(--c-background);
     color: var(--c-accent);
@@ -407,33 +331,11 @@ footer .contactBtn:hover {
 }
 
 .form-mid .submit-button button:hover {
-    background-color: #ecddb1;
+    background-color: var(--c-primary);
     color: var(--c-text-muted);
 }
 
 /* TRANSACTION BOARD */
-
-.transaction-top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.tabs {
-    background-color: var(--c-background);
-    color: var(--c-success);
-    border:2px solid var(--c-accent);
-    border-radius: 8px;
-    padding: 10px;
-    margin: 0 0 10px 0;
-    cursor: pointer;
-}
-
-.tabs:hover {
-    background-color: #ecddb1;
-    color: #C99A2E;
-}
-
 .board.transactions {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
@@ -441,20 +343,18 @@ footer .contactBtn:hover {
 
 .title-row {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    place-items: center;
+    grid-template-columns: repeat(4, 1fr);
     padding: 10px;
-    gap: 70px;
+    gap: 130px;
     border-top: 1px solid;
     border-bottom: 1px solid;
 }
 
-.divWrap {
+.transactionRow {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    place-items: center;
     padding: 10px;
-    gap: 70px;
+    margin: 10px;
+    gap: 130px;
+    border-top: 1px solid;
     border-bottom: 1px solid;
-    overflow-wrap: anywhere;
 }
