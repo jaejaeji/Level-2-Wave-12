@@ -84,7 +84,7 @@ const users = [
 
 
 function createUser (username, email, age, isPremium = false){
-  const newUsers = {
+  return {
     id: Date.now(),
     username,
     email,
@@ -93,8 +93,8 @@ function createUser (username, email, age, isPremium = false){
     loginCount: 0
   };
 
-  users.push(newUsers);
-  return newUsers;
+  // users.push(newUsers);
+  // return newUsers;
 }
 
 createUser("jlee22", "jlee22@email.com", 29);
@@ -127,16 +127,15 @@ console.log(users);
 // instead of a DECLARATION here?
 
 const isValidUser = function (user){
-  if (user.username.length > 0 && user.email.length > 0 && user.age >= 13) {
-    return true;
-  } else {
-    return false;
-  }
+  return user.username.length > 0 && user.email.length > 0 && user.age >= 13
 };
 
 users.forEach(function(user) {
-  console.log(`${user.username} valid: ${isValidUser(user)}`)
+  console.log(`${user.username} valid: ${isValidUser(user)}`);
 });
+
+// Function expressions can't be hoisted like declarations, so you are forced to declare the function before using it
+// Storing the function in a const prevents accidental changes for isValidUser
 
 // ----------------------------------------------------------
 // TASK 3 — formatUserDisplay  [ARROW FUNCTION + TERNARY]
@@ -256,7 +255,7 @@ function getAccountStats(userList){
   }, 0);
 
   const premiumUsers = userList.filter(user => user.isPremium === true);
-  const validUsers = userList.filter(user => isValidUser);
+  const validUsers = userList.filter(isValidUser);
 
   return {
     totalUsers:   userList.length,
@@ -290,8 +289,8 @@ console.log(getAccountStats(users));
 
 console.log(users.find(user => user.id === 2));
 
-const promoteUser = (userList, id) => {
-  const found = userList.find(user => user.id === id);
+const promoteUser = (userList) => {
+  const found = userList.find(user => user.id === 2);
   if (found) {
     found.isPremium = true;
     return found;
@@ -300,7 +299,7 @@ const promoteUser = (userList, id) => {
   }
 };
 
-promoteUser(users, 2);
+promoteUser(users);
 console.log(users.find(user => user.id === 2));
 
 //found refers to the same object inside users, so changing found.isPremium changes the original object property too

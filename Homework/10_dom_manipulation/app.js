@@ -93,9 +93,9 @@ const boardName = "Sprint 12 — Task Board";
 
 function renderHeader(taskList) {
   const titleEl = document.getElementById("board-title");
-  titleEl.textContent = "boardName";
+  titleEl.textContent = boardName;
   const taskEl = document.getElementById("task-count");
-  taskEl.textContent = taskList.length + " Tasks";
+  taskEl.textContent = taskList.length + " tasks";
 }
 
 // ----------------------------------------------------------
@@ -255,7 +255,7 @@ function addRemoveButtons() {
   allCards.forEach(function (card){
     const button = document.createElement("button");
     button.classList.add("remove-btn");
-    button.textContent = "X";
+    button.textContent = "✕";
     card.append(button);
   });
 }
@@ -314,11 +314,30 @@ function addNewTask(title, assignee, priority = "medium", status = "todo") {
 
   tasks.push(newTask);
 
-  const todoEl = document.getElementById("list-todo");
-
   const card = createTaskCard(newTask);
 
-  todoEl.append(card);
+  const todoEl = document.getElementById("list-todo");
+  const inprogressEl = document.getElementById("list-inprogress");
+  const doneEl = document.getElementById("list-done");
+
+  if (newTask.status === "todo"){
+      todoEl.append(card);
+    } else if (newTask.status === "inprogress"){
+      inprogressEl.append(card);
+    } else if (newTask.status === "done"){
+      doneEl.append(card);
+    };
+
+
+  updateCounts(tasks);
+  renderHeader(tasks);
+
+  const button = document.createElement("button");
+  button.classList.add("remove-btn");
+  button.textContent = "✕";
+  card.append(button);
+
+  highlightHighPriority();
 
 }
 
@@ -388,14 +407,17 @@ function markComplete(taskId) {
   updateCounts(tasks);
 }
 
+// dataset is used for storing data in HTML elements. For example, seetting data-id=taskId allows us to find cards matching a certain id
+
 // ============================================================
 // CALL YOUR FUNCTIONS HERE
 // ============================================================
 
 renderAll();
-addNewTask("Write unit tests", "Carlos", "high");
-highlightHighPriority();
 markComplete(1);
+addNewTask("Write unit tests", "Carlos", "high", "todo");
+
+
 
 // function highlightTasks() {
 //   const highCards = document.querySelectorAll(".priority-high");

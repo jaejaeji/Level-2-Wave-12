@@ -37,6 +37,9 @@ const passingScore = 60; // passing score is fixed
 const studentNames = ["Bob", "Mike", "Sophia", "Jane", "Peter", "Alice"]; // names won't change
 const studentScores = [74, 58, 92, 65, 81, 47]; // scores won't change
 
+console.log("📚 " + className);
+console.log("Students enrolled: " + studentNames.length);
+
 // ----------------------------------------------------------
 // TASK 2 — Access and display by index
 // ----------------------------------------------------------
@@ -125,7 +128,7 @@ for (let i = 0; i < studentScores.length; i++) {
     }
 }
 
-let classAverage = totalScore / studentScores.length;
+const classAverage = totalScore / studentScores.length;
 
 console.log("📊 Class Stats:");
 console.log("Average score: " + classAverage.toFixed(2));
@@ -211,7 +214,7 @@ console.log(`Class size now: ${studentNames.length}`);
 //   Log: "🏆 Top student: " + studentNames[topStudentIndex]
 //          + " with " + studentScores[topStudentIndex] + " points"
 
-topStudentIndex = 0;
+let topStudentIndex = 0;
 
 for (let i = 0; i < studentScores.length; i++) {
     if (studentScores[i] > studentScores[topStudentIndex]) {
@@ -247,7 +250,7 @@ console.log("🏆 Top student: " + studentNames[topStudentIndex] + " with " + st
 // Hint: compare studentScores[i] < passingScore &&
 //              curvedScores[i] >= passingScore
 
-curvePoints = 5;
+const curvePoints = 5;
 let curvedScores = [];
 
 for (let i = 0; i < studentScores.length; i++) {

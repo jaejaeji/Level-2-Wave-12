@@ -275,8 +275,12 @@ for (let i = 1; i <= 6; i++) {
         currentPrice = item6Price;
     }
 
-    if (currentPrice < 15) {
+    if (currentPrice > itemLimit) {
+        console.log("⛔ Item " + i + " ($" + currentPrice + ") exceeds limit of $" + itemLimit);
+        continue;
+    } else if (currentPrice < 15) {
         loyaltyPoints += currentPrice * 2;
+        console.log("⭐ Item " + i + " earned " + currentPrice + " pts");
         console.log("⭐⭐ Double points for item " + i + "! +" + (currentPrice * 2) + " pts");
     } else {
         loyaltyPoints += currentPrice;

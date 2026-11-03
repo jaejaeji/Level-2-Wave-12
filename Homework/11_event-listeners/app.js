@@ -253,8 +253,8 @@ function handleAddTask() {
   
   renderBoard(tasks);
 
-  title.value = "";
-  assignee.value = "";
+  document.getElementById("task-title-input").value = "";
+  document.getElementById("task-assignee-input").value = "";
 
 }
 
@@ -434,6 +434,11 @@ function handleKeyDown(event) {
 
 function init() {
   renderBoard(tasks);
+  document.getElementById("add-task-btn").addEventListener("click", handleAddTask);
+  document.querySelector(".board").addEventListener("click", handleBoardClick);
+  document.querySelector(".header-right").addEventListener("click", handleFilterClick);
+  document.addEventListener("keydown", handleKeyDown);
+  document.getElementById("search-input").addEventListener("input", handleSearch);
 }
 
 // without functions like init(), function calls get scattered accross the file and becomes difficult to find with increasing lines of code
@@ -475,7 +480,6 @@ function handleSearch(event) {
   });
 }
 
-document.getElementById("search-input").addEventListener("input", handleSearch);
 // "input" filters results on every keystroke, while "change" only filters when moving outside the input box.
 
 // ============================================================
@@ -486,10 +490,6 @@ document.getElementById("search-input").addEventListener("input", handleSearch);
 // START
 // ============================================================
 
-document.getElementById("add-task-btn").addEventListener("click", handleAddTask);
-document.querySelector(".board").addEventListener("click", handleBoardClick);
-document.querySelector(".header-right").addEventListener("click", handleFilterClick);
-document.addEventListener("keydown", handleKeyDown);
-// document.getElementById("search-input").addEventListener("input", handleSearch);
+
 init();
 
