@@ -19,7 +19,7 @@
         </div>
 
         <div class="header-right">
-            <span class="themeBtn" id="theme-btn">🌙 Dark Mode</span>
+            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
         </div>
     </header>
 
@@ -29,6 +29,7 @@
     <div class="board Form">
         <div class="form-top">
             <h2>Add Transaction</h2>
+            <button id="clear-data">Clear Data</button>
         </div>
         
         <div class="form-mid">
@@ -36,8 +37,9 @@
                 <label for="type">Type</label>
 
                 <select id="type">
-                    <option value="income">Income</option>
                     <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                    <option value="savings">Savings</option>
                 </select>
 
                 <label for="date">Date </label>
@@ -65,7 +67,7 @@
                 </div>
             </form>
             <form class="inputBudget" id="inputBudget">
-                <label for="budget">Budget ($)</label>
+                <label for="budget">Budget: $<span id="currentBudget">0</span></label>
                 <input id="budget" type="number" required>
                 <div class="submit-button">
                     <button type="submit">Submit</button>
@@ -79,14 +81,50 @@
     <!-- Transactions Board -->
 
     <div class="board transactions">
-        <h2 class="transaction-title">Transactions</h2>
+        <div class="transaction-top">
+            <h2 class="transaction-title">Transactions</h2>
+        </div>
+
+        <div class="transaction-mid">
+            <div class="allTabs" id="typeTabs">
+                <button class="tabs" id="allTab" value="all">All</button>
+                <button class="tabs" id="expensesTab" value="expense">Expenses</button>
+                <button class="tabs" id="incomeTab" value="income">Income</button>
+                <button class="tabs" id="savingsTab" value="savings">Savings</button>
+            </div>
+            <div class="filters">
+                <select id="catFilter">
+                    <option value="all">All</option>
+                    <option value="housing">Housing</option>
+                    <option value="bills">Bills</option>
+                    <option value="food">Food</option>
+                    <option value="health">Health</option>
+                    <option value="transport">Transport</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="filters">
+                <label for="dateFrom">Start Date </label>
+                <input id="dateFrom" type="text" placeholder="YYYY/MM/DD" required>
+            </div>
+            <div class="filters">
+                <label for="dateTo">End Date </label>
+                <input id="dateTo" type="text" placeholder="YYYY/MM/DD" required>
+            </div>
+            <div class="filters">
+                <button class="filterBtn" id="filterBtn">Filter</button>
+            </div>
+        </div>
+
         <div class="title-row">
             <div class="row1">Date</div>
+            <div class="row1">Type</div>
             <div class="row1">Description</div>
             <div class="row1">Category</div>
             <div class="row1">Amount ($)</div>
         </div>
-        <div class="transactionRows" id="transactionRows">sssSS</div>
+        <div class="transactionRows" id="transactionRows"></div>
 
     </div>
     </main>

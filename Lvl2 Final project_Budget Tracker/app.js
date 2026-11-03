@@ -4,9 +4,29 @@ function handleThemeToggle() {
     document.body.classList.toggle("dark");
     const isDark = document.body.classList.contains("dark");
     const themeBtn = document.getElementById("themeBtn");
+
+    if (isDark) {
+        themeBtn.textContent = "☀️ Light Mode";
+        const darkMode = localStorage.setItem("darkMode", JSON.stringify(isDark));
+    } else {
+        themeBtn.textContent = "🌙 Dark Mode";
+        const darkMode = localStorage.setItem("darkMode", JSON.stringify(isDark));
+    }
 }
 
-document.getElementById("theme-btn").addEventListener("click", handleThemeToggle);
+function loadTheme() {
+    const isDark = JSON.parse(localStorage.getItem("darkMode"));
+
+    if (isDark) {
+        themeBtn.textContent = "☀️ Light Mode";
+        document.body.classList.toggle("dark");
+    } else {
+        themeBtn.textContent = "🌙 Dark Mode";
+    }
+}
+
+document.getElementById("themeBtn").addEventListener("click", handleThemeToggle);
+
 
 // CONTACT FORM - Open/Close
 const overlay = document.getElementById("overlay");
@@ -38,3 +58,326 @@ document.getElementById("contactForm").addEventListener("submit", function(event
     event.preventDefault(); // stop browser from reloading page
     alert("Thanks! Nothing was actually sent, this is just a demo.");
 });
+
+
+// OVERVIEW DATA
+
+
+const loadBalance = function(data){
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    let totalIncome = 0;
+    let totalSavings = 0;
+    let totalExpenses = 0;
+
+    if (savedTransactions !== null) {
+        savedTransactions.forEach((data) => {
+            if (data.type === "income") {
+                return totalIncome += parseFloat(data.amount);
+            }
+            if (data.type === "savings") {
+                return totalSavings += parseFloat(data.amount);
+            }
+            if (data.type === "expense") {
+                return totalExpenses += parseFloat(data.amount);
+            }
+        });
+
+        const balance = totalIncome - totalExpenses;
+        // console.log(totalIncome);
+        // console.log(totalSavings);
+        // console.log(totalExpenses);
+        document.getElementById("balance-total").textContent = "$" + balance;
+    } else {
+        return;
+    }
+}
+
+const loadIncome = function(data){ //need to add account for month
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    let income = 0;
+
+    if (savedTransactions !== null) {
+        savedTransactions.forEach((data) => {
+            if (data.type === "income") {
+                return income += parseFloat(data.amount);
+            }
+        });
+
+        document.getElementById("income-total").textContent = "$" + parseFloat(income);
+
+    } else {
+        return;
+    }
+}
+
+const loadSavings = function(data){
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    let savings = 0;
+
+    if (savedTransactions !== null) {
+        savedTransactions.forEach((data) => {
+            if (data.type === "savings") {
+                return savings += parseFloat(data.amount);
+            }
+        });
+
+        document.getElementById("savings-total").textContent = "$" + parseFloat(savings);
+    } else {
+        return;
+    }
+}
+
+const loadExpenses = function(data){
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    let expenses = 0;
+
+    if (savedTransactions !== null) {
+        savedTransactions.forEach((data) => {
+            if (data.type === "expense") {
+                return expenses += parseFloat(data.amount);
+            }
+        });
+
+        document.getElementById("currentExpenses").textContent = "Expenses: $" + parseFloat(expenses);
+        
+    } else {
+        return;
+    }
+}
+
+
+const loadBudget = function(data){
+    const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
+    if (savedBudget !== null) {
+        document.getElementById("currentBudget").textContent = "Budget: $" + savedBudget;
+    } else {
+        return;
+    }
+}
+
+const loadBudgetLeft = function(data){
+    const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    let expenses = 0;
+
+    if (savedBudget !== null && savedTransactions !== null) {
+        savedTransactions.forEach((data) => {
+            if (data.type === "expense") {
+                return expenses += parseFloat(data.amount);
+            }
+        });
+
+        const budgetLeft = savedBudget - expenses;
+        document.getElementById("budgetLeft").textContent = "Budget Left: $" + budgetLeft;
+    } else {
+        return;
+    }
+}
+
+
+
+// RECENT TRANSACTIONS
+
+const createRow = function(data){
+    const dateEl = document.createElement("div");
+    const typeEl = document.createElement("div");
+    const descriptionEl = document.createElement("div");
+    const categoryEl = document.createElement("div");
+    const amountEl = document.createElement("div");
+
+    dateEl.textContent = data.date;
+    typeEl.textContent = data.type;
+    descriptionEl.textContent = data.description;
+    categoryEl.textContent = data.category;
+    amountEl.textContent = "$" + data.amount;
+
+    dateEl.classList.add("row2");
+    typeEl.classList.add("row2");
+    descriptionEl.classList.add("row2");
+    categoryEl.classList.add("row2");
+    amountEl.classList.add("row2");
+
+    const divWrap = document.createElement("div");
+    divWrap.classList.add("divWrap");
+
+    divWrap.appendChild(dateEl);
+    divWrap.appendChild(typeEl);
+    divWrap.appendChild(descriptionEl);
+    divWrap.appendChild(categoryEl);
+    divWrap.appendChild(amountEl);
+
+    document.getElementById("transactionRows").appendChild(divWrap);
+
+}
+
+const loadTransactions = function(){
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    // console.log(savedTransactions);
+    if (savedTransactions !== null) {
+        savedTransactions.forEach((data) => createRow(data));
+    } else {
+        return;
+    }
+}
+
+const loadData = function() {
+    loadTheme();
+    loadBalance();
+    loadIncome();
+    loadSavings();
+    loadExpenses();
+    loadBudget();
+    loadBudgetLeft();
+    loadTransactions();
+}
+
+loadData();
+
+
+
+// Show Bar by Category
+
+const loadCat = function(){
+    const categories = {housing: 0, bills: 0, food: 0, health: 0, transport: 0, entertainment: 0, other: 0};
+
+
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+   
+    if (savedTransactions === null) {
+        return categories;
+    }
+
+
+    savedTransactions.forEach((data) => {
+        if (data.type === "expense") {
+            categories[data.category] += parseFloat(data.amount);
+        }
+    });
+
+
+    return categories;
+
+
+}
+
+
+// console.log(loadCat());
+
+
+const renderBudgetBar = function(){
+    const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
+
+
+    const totals = loadCat();
+    let totalExpense = Object.values(totals).reduce((acc, value) => acc + value, 0);
+
+
+    const percent = totalExpense / savedBudget * 100;
+
+
+    if (totalExpense === 0 || savedBudget === null) {
+        return;
+    }
+
+
+    if (percent > 100) {
+        document.getElementById("budgetBar").style.background = "red";
+    }
+    document.getElementById("budgetBar").style.width = Math.min(percent, 100) + "%";
+
+
+    // console.log(savedBudget);
+
+
+
+
+}
+
+
+const renderCategoryBars = function(){
+    const totals = loadCat();
+
+
+    let totalExpense = Object.values(totals).reduce((acc, value) => acc + value, 0);
+
+
+    // console.log(totalExpense);
+
+
+    const percent = {};
+
+
+    if (totalExpense === 0) {
+        return;
+    }
+
+
+    for(const category in totals){
+
+
+        percent[category] = totals[category] / totalExpense * 100;
+        document.getElementById(`${category}Bar`).style.width = percent[category] + "%";
+        document.getElementById(`${category}Spent`).textContent = `${category.toUpperCase()}: $${totals[category].toFixed(2)}`;
+    }
+
+
+    // console.log(percent);
+
+
+}
+
+
+renderBudgetBar();
+renderCategoryBars();
+
+
+
+
+// Currency API
+
+
+async function safeFetch(url) {
+    const response = await axios.get(url);
+    return response.data;
+}
+
+
+async function findCurrency(currencyFrom, currencyTo) {
+    const data = await safeFetch("https://api.frankfurter.dev/v2/rates");
+
+
+    const foundFrom = data.find((item) => {
+        return item["quote"] === currencyFrom;
+    })
+
+
+    const foundTo = data.find((item) => {
+        return item["quote"] === currencyTo;
+    })
+
+
+    const currencyRate = foundTo["rate"] / foundFrom["rate"];
+
+
+    console.log(foundFrom);
+    console.log(foundTo);
+    console.log(currencyRate.toFixed(2));
+
+
+    return currencyRate
+}
+
+
+const currencyInput = function(){
+    const currencyFrom = document.getElementById("currencyFrom").value;
+    const currencyTo = document.getElementById("currencyTo").value;
+
+
+    return findCurrency(currencyFrom, currencyTo);
+}
+
+
+document.getElementById("currencyFrom").addEventListener('change', currencyInput)
+document.getElementById("currencyTo").addEventListener('change', currencyInput)
+
+
