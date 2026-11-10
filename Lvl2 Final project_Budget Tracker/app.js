@@ -335,49 +335,89 @@ renderCategoryBars();
 
 // Currency API
 
+let rates = {};
 
 async function safeFetch(url) {
-    const response = await axios.get(url);
-    return response.data;
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (err) {
+        if (err.response && err.response.status === 404) {
+            alert("❌ Currency Rates Page not found");
+        } else if (err.response && err.response.status === 403) {
+            alert("❌ You don't have permisison to access this server")
+        } else if (err.response) {
+            alert(`❌ Request failed: ${err.response.status}`);
+        } else {
+            alert(`❌ Network Error: ${err.message}`)
+        }
+    }
+
+    return [];
 }
 
+async function loadFetch() {
+    rates = await safeFetch("https://api.frankfurter.dev/v2/rates");
+}
 
-async function findCurrency(currencyFrom, currencyTo) {
-    const data = await safeFetch("https://api.frankfurter.dev/v2/rates");
+function findCurrency(currencyNum, currencyFrom, currencyTo) {
+    const result = document.getElementById("currencyResult");
 
-
-    const foundFrom = data.find((item) => {
+    if (rates.length === 0) {
+        result.textContent = "Rates unavailable"
+        return
+    }
+    const foundFrom = rates.find((item) => {
         return item["quote"] === currencyFrom;
     })
 
 
-    const foundTo = data.find((item) => {
+    const foundTo = rates.find((item) => {
         return item["quote"] === currencyTo;
     })
 
 
-    const currencyRate = foundTo["rate"] / foundFrom["rate"];
+    const currencyRate = currencyNum * foundTo["rate"] / foundFrom["rate"];
 
+    // usd/eur *From
+    // krw/eur *To
+    // Rate = (krw/eur) / (usd/eur) = krw/usd = To/From
 
-    console.log(foundFrom);
-    console.log(foundTo);
-    console.log(currencyRate.toFixed(2));
+    // console.log(foundFrom);
+    // console.log(foundTo);
+    // console.log(currencyRate.toFixed(2));
 
+    result.textContent = currencyRate.toFixed(2);
 
     return currencyRate
 }
 
+function swapCurrency() {
+    const currencyNum = document.getElementById("fromInput").value;
+    let currencyFrom = document.getElementById("currencyFrom").value;
+    let currencyTo = document.getElementById("currencyTo").value;
 
-const currencyInput = function(){
-    const currencyFrom = document.getElementById("currencyFrom").value;
-    const currencyTo = document.getElementById("currencyTo").value;
+    [currencyFrom, currencyTo] = [currencyTo, currencyFrom]
 
-
-    return findCurrency(currencyFrom, currencyTo);
+    document.getElementById("currencyFrom").value = currencyFrom;
+    document.getElementById("currencyTo").value = currencyTo;
+    // console.log(currencyFrom, currencyTo)
+    findCurrency(currencyNum, currencyFrom, currencyTo);
 }
 
 
-document.getElementById("currencyFrom").addEventListener('change', currencyInput)
-document.getElementById("currencyTo").addEventListener('change', currencyInput)
 
+const currencyInput = function(){
+    const currencyNum = document.getElementById("fromInput").value;
+    const currencyFrom = document.getElementById("currencyFrom").value;
+    const currencyTo = document.getElementById("currencyTo").value;
+    findCurrency(currencyNum, currencyFrom, currencyTo);
+}
+
+
+document.getElementById("convertBtn").addEventListener('click', currencyInput)
+document.getElementById("reverseBtn").addEventListener('click', swapCurrency)
+
+
+loadFetch()
 

@@ -34,13 +34,28 @@
         
         <div class="form-mid">
             <form class="inputTransaction" id="inputTransaction">
-                <label for="type">Type</label>
-
-                <select id="type">
-                    <option value="expense">Expense</option>
-                    <option value="income">Income</option>
-                    <option value="savings">Savings</option>
-                </select>
+                <div class="mid-box">
+                    <div>
+                        <label for="type">Type</label>
+                        <select id="type">
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                            <option value="savings">Savings</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="housing">Housing</option>
+                            <option value="bills">Bills</option>
+                            <option value="food">Food</option>
+                            <option value="health">Health</option>
+                            <option value="transport">Transport</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
 
                 <label for="date">Date </label>
                 <input id="date" type="text" placeholder="YYYY/MM/DD" required>
@@ -48,16 +63,7 @@
                 <label for="description">Description </label>
                 <input id="description" type="text" required>
 
-                <label for="category">Category</label>
-                <select id="category">
-                    <option value="housing">Housing</option>
-                    <option value="bills">Bills</option>
-                    <option value="food">Food</option>
-                    <option value="health">Health</option>
-                    <option value="transport">Transport</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="other">Other</option>
-                </select>
+
 
                 <label for="amount">Amount ($)</label>
                 <input id="amount" type="number" required>
@@ -81,17 +87,18 @@
     <!-- Transactions Board -->
 
     <div class="board transactions">
-        <div class="transaction-top">
-            <h2 class="transaction-title">Transactions</h2>
-        </div>
-
-        <div class="transaction-mid">
-            <div class="allTabs" id="typeTabs">
-                <button class="tabs" id="allTab" value="all">All</button>
-                <button class="tabs" id="expensesTab" value="expense">Expenses</button>
-                <button class="tabs" id="incomeTab" value="income">Income</button>
-                <button class="tabs" id="savingsTab" value="savings">Savings</button>
+            <div class="transaction-top">
+              <h2 class="transaction-title">Transactions</h2>
+                <div class="allTabs" id="typeTabs">
+                    <button class="tabs" id="allTab" value="all">All</button>
+                    <button class="tabs" id="expensesTab" value="expense">Expenses</button>
+                    <button class="tabs" id="incomeTab" value="income">Income</button>
+                    <button class="tabs" id="savingsTab" value="savings">Savings</button>
+                </div>
             </div>
+
+            <div class="transaction-mid">
+
             <div class="filters">
                 <select id="catFilter">
                     <option value="all">All</option>

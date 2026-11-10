@@ -39,15 +39,17 @@
             <span class="summary-box">Current Balance</br></br>
                 <span class="summary-number" id="balance-total"> $0 </span>
             </span>
-            <span class="summary-box">Income</br></br>
-                <span class="summary-number" id="income-total"> $0 </span>
-            </span>
-            <span class="summary-box">Total Savings</br></br>
-                <span class="summary-number" id="savings-total"> $0 </span>
-            </span>
-            <span class="summary-box">Currency</br>
-                <label for="fromInput">From </label>
-                <input id="fromInput" type="text" required>
+            <div>
+                <span class="summary-box">Income</br></br>
+                    <span class="summary-number" id="income-total"> $0 </span>
+                </span>
+                <span class="summary-box">Total Savings</br></br>
+                    <span class="summary-number" id="savings-total"> $0 </span>
+                </span>
+            </div>
+            <div class="summary-box">Currency</br>
+                <div class="currencyFromInput">
+                <input id="fromInput" type="number" placeholder="From" required>
                 <select id="currencyFrom">
                     <option value="USD">USD $</option>
                     <option value="EUR">EUR €</option>
@@ -56,10 +58,9 @@
                     <option value="JPY">JPY ¥</option>
                     <option value="CNY">CNY ¥</option>
                 </select>
-                <label for="toInput">To </label>
-                <input id="toInput" type="text" required>
-
-
+                </div>
+                <div class="currencyToInput">
+                <label for="currencyTo">To </label>
                 <select id="currencyTo">
                     <option value="USD">USD $</option>
                     <option value="EUR">EUR €</option>
@@ -68,10 +69,13 @@
                     <option value="JPY">JPY ¥</option>
                     <option value="CNY">CNY ¥</option>
                 </select>
-                <!-- <span id="currency-conversion"> (1 USD to KRW) </span> -->
-                <span class="summary-number" id="currency-result"> $1.00 </span>
-                <button id="currency-reverse">⇆</button>
-            </span>
+                <span class="summary-number" id="currencyResult"> $1.00 </span>
+                </div>
+                <div class="currency-btns">
+                <button id="convertBtn">Convert </button>
+                <button id="reverseBtn">⇆</button>
+                </div>
+            </div>
         </div>
 
 
