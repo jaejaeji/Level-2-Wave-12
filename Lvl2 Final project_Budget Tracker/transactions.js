@@ -28,39 +28,12 @@ function loadTheme() {
 document.getElementById("themeBtn").addEventListener("click", handleThemeToggle);
 
 
-// CONTACT FORM - Open/Close
-const overlay = document.getElementById("overlay");
-const contactBtn = document.getElementById("contactBtn");
-const closeBtn = document.getElementById("closeBtn");
-
-function openForm() {overlay.classList.add("open");}
-
-contactBtn.addEventListener("click", openForm);
-
-function closeForm(event) {
-    if (event.target === closeBtn || event.target === overlay){
-        overlay.classList.remove("open");
-    };
-}
-
-function closeFormEsc(event) {
-    if (event.key === "Escape"){
-        overlay.classList.remove("open");
-    };
-}
-
-overlay.addEventListener("click", closeForm);
-document.body.addEventListener("keydown", closeFormEsc);
-
-// CONTACT FORM - Submit
-
-document.getElementById("contactForm").addEventListener("submit", function(event){
-    event.preventDefault(); // stop browser from reloading page
-    alert("Thanks! Nothing was actually sent, this is just a demo.");
-});
-
-
 // Transaction Values - Input
+
+function parseNum(num) {
+    const toNum = parseFloat(num);
+    return toNum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2} );
+}
 
 let allTransactionData = [];
 
@@ -103,18 +76,21 @@ const createRow = function(data){
     const descriptionEl = document.createElement("div");
     const categoryEl = document.createElement("div");
     const amountEl = document.createElement("div");
+    const deleteBtn = document.createElement("button");
 
     dateEl.textContent = data.date;
     typeEl.textContent = data.type;
     descriptionEl.textContent = data.description;
     categoryEl.textContent = data.category;
-    amountEl.textContent = "$" + data.amount;
+    amountEl.textContent = "$" + parseNum(data.amount);
+    deleteBtn.textContent = "✕";
 
     dateEl.classList.add("row2");
     typeEl.classList.add("row2");
     descriptionEl.classList.add("row2");
     categoryEl.classList.add("row2");
     amountEl.classList.add("row2");
+    deleteBtn.classList.add("deleteBtn");
 
     const divWrap = document.createElement("div");
     divWrap.classList.add("divWrap");
@@ -124,13 +100,24 @@ const createRow = function(data){
     divWrap.appendChild(descriptionEl);
     divWrap.appendChild(categoryEl);
     divWrap.appendChild(amountEl);
+    divWrap.appendChild(deleteBtn);
 
     document.getElementById("transactionRows").appendChild(divWrap);
+
+    function deleteTransaction() {
+        const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+        const filtered = savedTransactions.filter((savedData) => savedData.id !== data.id);
+        allTransactionData = filtered;
+        saveTransactions(filtered);
+        renderTransaction(filters);
+    };
+
+    deleteBtn.addEventListener("click", deleteTransaction)
 
 }
 
 const saveTransactions = function(data){
-    const savedTransactions = localStorage.setItem("transactionData", JSON.stringify(data));
+    localStorage.setItem("transactionData", JSON.stringify(data));
     console.log("Transaction data saved");
 }
 
@@ -154,7 +141,7 @@ document.getElementById("inputBudget").addEventListener("submit", function(event
     const budget = document.getElementById("budget").value;
     // console.log(`budget: $${budget}`);
 
-    document.getElementById("currentBudget").textContent = budget;
+    document.getElementById("currentBudget").textContent = parseNum(budget);
 
     saveBudget(budget);
 
@@ -171,7 +158,7 @@ const loadBudget = function(data){
     const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
     // console.log(savedBudget);
     if (savedBudget !== null) {
-        document.getElementById("currentBudget").textContent = savedBudget;
+        document.getElementById("currentBudget").textContent = parseNum(savedBudget);
     } else {
         return;
     }
@@ -187,6 +174,8 @@ document.getElementById("clear-data").addEventListener("click", function(event){
 
     localStorage.removeItem("transactionData");
     localStorage.removeItem("budgetData");
+    localStorage.removeItem("messageData");
+
 
     window.location.reload();
     console.log("localStorage is cleared")

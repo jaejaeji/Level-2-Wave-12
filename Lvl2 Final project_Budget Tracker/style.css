@@ -61,7 +61,7 @@ body.dark { background-color: var(--bg); color: var(--text); }
 body.dark .header { background-color: var(--sidebar); color: var(--text-secondary);}
 body.dark .navBtn:hover { color: var(--primary-hover) }
 body.dark .popup-top button,
-body.dark .submit-button button, body.dark .filters button { background-color: var(--bg);}
+body.dark .submit-button button, body.dark .filters button { background-color: var(--bg); }
 body.dark .themeBtn:hover,
 body.dark .submit-button button:hover, body.dark .filters button:hover { background-color: var(--surface-hover); color: var(--gold-bright); }
 body.dark .layout h2 { color: var(--text); }
@@ -72,7 +72,8 @@ body.dark .board { background-color: var(--surface); color: var(--text-secondary
 body.dark .popup { background-color: var(--bg); color: var(--gold); }
 body.dark .tabs {    background-color: var(--c-success); color: var(--c-background); border:2px solid var(--c-accent); }
 body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
-
+body.dark button.deleteBtn { background-color: var(--surface); }
+body.dark button.deleteBtn:hover { background-color: var(--surface-hover); }
 
 /* HEADER */
 .header {
@@ -541,7 +542,7 @@ footer .contactBtn:hover {
 
 .title-row {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr)) 40px;
     place-items: center;
     padding: 10px;
     gap: 70px;
@@ -551,12 +552,25 @@ footer .contactBtn:hover {
 
 .divWrap {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr)) 40px;
     place-items: center;
     padding: 10px;
     gap: 70px;
     border-bottom: 1px solid;
     overflow-wrap: anywhere;
+}
+
+button.deleteBtn {
+    color: rgb(231, 123, 123);
+    background-color: var(--c-surface);
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+button.deleteBtn:hover {
+    background-color: var(--c-background);
+    cursor: pointer;
 }
 
 /* Responsive Design */

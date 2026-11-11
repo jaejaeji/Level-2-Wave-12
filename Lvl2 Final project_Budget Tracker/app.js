@@ -28,38 +28,6 @@ function loadTheme() {
 document.getElementById("themeBtn").addEventListener("click", handleThemeToggle);
 
 
-// CONTACT FORM - Open/Close
-const overlay = document.getElementById("overlay");
-const contactBtn = document.getElementById("contactBtn");
-const closeBtn = document.getElementById("closeBtn");
-
-function openForm() {overlay.classList.add("open");}
-
-contactBtn.addEventListener("click", openForm);
-
-function closeForm(event) {
-    if (event.target === closeBtn || event.target === overlay){
-        overlay.classList.remove("open");
-    };
-}
-
-function closeFormEsc(event) {
-    if (event.key === "Escape"){
-        overlay.classList.remove("open");
-    };
-}
-
-overlay.addEventListener("click", closeForm);
-document.body.addEventListener("keydown", closeFormEsc);
-
-// CONTACT FORM - Submit
-
-document.getElementById("contactForm").addEventListener("submit", function(event){
-    event.preventDefault(); // stop browser from reloading page
-    alert("Thanks! Nothing was actually sent, this is just a demo.");
-});
-
-
 // MONTH OVERVIEW DATA
 
 const now = new Date();
@@ -85,6 +53,14 @@ const getMonthTransactions = function() {
     return savedTransactions.filter((data) => data.date.startsWith(getMonthPrefix()));
 }
 
+
+// LOAD DATA
+
+function parseNum(num) {
+    const toNum = parseFloat(num);
+    return toNum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2} );
+}
+
 const loadBalance = function(data){
     const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
     let totalIncome = 0;
@@ -108,7 +84,7 @@ const loadBalance = function(data){
         // console.log(totalIncome);
         // console.log(totalSavings);
         // console.log(totalExpenses);
-        document.getElementById("balance-total").textContent = "$" + balance;
+        document.getElementById("balance-total").textContent = "$" + parseNum(balance);
     } else {
         return;
     }
@@ -123,7 +99,7 @@ const loadIncome = function(){ //need to add account for month
                     }
                     return acc;
         }, 0);
-        document.getElementById("income-total").textContent = "$" + income;
+        document.getElementById("income-total").textContent = "$" + parseNum(income);
 }
 
 const loadSavings = function(data){
@@ -136,7 +112,7 @@ const loadSavings = function(data){
                 }
                 return acc;
             }, 0);
-            document.getElementById("savings-total").textContent = "$" + savings;
+            document.getElementById("savings-total").textContent = "$" + parseNum(savings);
         } else {
             return;
         }
@@ -150,14 +126,14 @@ const loadExpenses = function(data){
             }
             return acc;
         }, 0);
-        document.getElementById("currentExpenses").textContent = "Expenses: $" + expenses;
+        document.getElementById("currentExpenses").textContent = "Expenses: $" + parseNum(expenses);
 }
 
 
 const loadBudget = function(data){
     const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
     if (savedBudget !== null) {
-        document.getElementById("currentBudget").textContent = "Budget: $" + savedBudget;
+        document.getElementById("currentBudget").textContent = "Budget: $" + parseNum(savedBudget);
     } else {
         return;
     }
@@ -176,7 +152,7 @@ const loadBudgetLeft = function(data){
         }, 0);
 
         const budgetLeft = savedBudget - expenses;
-        document.getElementById("budgetLeft").textContent = "Budget Left: $" + budgetLeft;
+        document.getElementById("budgetLeft").textContent = "Budget Left: $" + parseNum(budgetLeft);
     } else {
         return;
     }
@@ -199,7 +175,7 @@ const createRow = function(data){
     typeEl.textContent = data.type;
     descriptionEl.textContent = data.description;
     categoryEl.textContent = data.category;
-    amountEl.textContent = "$" + data.amount;
+    amountEl.textContent = "$" + parseNum(data.amount);
 
     dateEl.classList.add("row2");
     typeEl.classList.add("row2");
@@ -244,13 +220,11 @@ const loadCat = function(){
         return categories;
     }
 
-
     savedTransactions.forEach((data) => {
             if (data.type === "expense") {
                 categories[data.category] += parseFloat(data.amount);
             }
     });
-
 
     return categories;
 }
@@ -302,17 +276,13 @@ const renderCategoryBars = function(){
     for(const category in totals){
         percent[category] = totals[category] / totalExpense * 100;
         document.getElementById(`${category}Bar`).style.width = percent[category] + "%";
-        document.getElementById(`${category}Spent`).textContent = `${category.toUpperCase()}: $${totals[category].toFixed(2)}`;
+        document.getElementById(`${category}Spent`).textContent = `${category.toUpperCase()}: $${parseNum(totals[category])}`;
     }
-
 
     // console.log(percent);
 }
 
-
-
-
-// Currency API
+// CURRENCY API
 
 let rates = [];
 
@@ -366,10 +336,11 @@ function findCurrency(currencyNum, currencyFrom, currencyTo) {
     // console.log(foundTo);
     // console.log(currencyRate.toFixed(2));
 
-    result.textContent = currencyRate.toFixed(2);
+    result.textContent = parseNum(currencyRate);
 
     return currencyRate
 }
+
 
 function swapCurrency() {
     const currencyNum = document.getElementById("fromInput").value;
@@ -393,13 +364,11 @@ const currencyInput = function(){
     findCurrency(currencyNum, currencyFrom, currencyTo);
 }
 
-
 document.getElementById("convertBtn").addEventListener('click', currencyInput)
 document.getElementById("reverseBtn").addEventListener('click', swapCurrency)
 
 
-
-const loadData = function() {
+function loadData() {
     loadTheme();
     loadBalance();
     loadIncome();
