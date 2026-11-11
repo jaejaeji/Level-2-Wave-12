@@ -67,6 +67,7 @@ body.dark .submit-button button:hover, body.dark .filters button:hover { backgro
 body.dark .layout h2 { color: var(--text); }
 body.dark .summary-number {color: var(--text); }
 body.dark .summary-box button {background-color: var(--surface); color: var(--text-secondary);}
+body.dark .summary-box button:hover { background-color: var(--c-secondary); }
 body.dark .board { background-color: var(--surface); color: var(--text-secondary); border: 2px solid var(--gold-bright);}
 body.dark .popup { background-color: var(--bg); color: var(--gold); }
 body.dark .tabs {    background-color: var(--c-success); color: var(--c-background); border:2px solid var(--c-accent); }
@@ -86,6 +87,12 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
     top: 0;
     z-index: 10;
     transition: background-color 0.3s, border-color 0.3s;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
 }
 
 .header h1 { font-size: 32px; font-weight: 700; }
@@ -152,6 +159,7 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
 .summary-box {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     border: 1px solid var(--c-accent);
     border-radius: 16px;
@@ -173,9 +181,35 @@ body.dark .tabs:hover { background-color: #4b7d2f;    color: #C99A2E; }
     border-radius:6px;
 }
 
+.summary-box input {
+    width: 60%;
+}
+
+.currencyFromInput select {
+    width: 38%;
+}
+
+.currencyToInput select {
+    width: 70%;
+}
+
 .summary-mid {
     display: flex;
     flex-direction: row;
+}
+
+.currencyToInput {
+    display: Flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.currency-btns {
+    display: Flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
 }
 
 .summary-number {
@@ -523,4 +557,31 @@ footer .contactBtn:hover {
     gap: 70px;
     border-bottom: 1px solid;
     overflow-wrap: anywhere;
+}
+
+/* Responsive Design */
+
+@media (max-width: 940px) {
+    .header { display: flex; flex-direction: column; gap: 16px; }
+    .currencyFromInput { display: flex; align-items: center; width: 100%; gap: 16px; }
+    .summary-box { align-items: center; width: 100%; }
+    .summary-mid { display: flex; flex-direction: column; gap: 16px; }
+}
+
+@media (max-width: 768px) {
+    .title-row, .divWrap { gap: 8px; overflow-wrap: anywhere; }
+    .summary-box input { width: 60%; }
+    .currencyFromInput select { width: 35%; }
+    .mid-box { gap: 8px;}
+    .transaction-top, .transaction-mid, .allTabs { flex-wrap: wrap; gap: 10px; }
+}
+
+@media (max-width: 545px) {
+    .header-right { display: flex; flex-direction: column; gap: 16px; }
+    .header { position: static; }
+}
+
+@media (max-width: 480px) {
+    .summary-lowbox { height: 150px; }
+    .title-row, .divWrap { font-size: 12px; gap: 2px;}
 }

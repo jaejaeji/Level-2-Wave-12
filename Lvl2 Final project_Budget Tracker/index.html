@@ -14,15 +14,19 @@
             <h1>Budget Tracker v01</h1>
         </div>
    
-        <div class="header-center">
-            <a class="navBtn" href="index.html">Home</a>
-            <a class="navBtn" href="transactions.html">Transactions</a>
-        </div>
-
-
         <div class="header-right">
-            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
+
+            <div>
+                <a class="navBtn" href="index.html">Home</a>
+                <a class="navBtn" href="transactions.html">Transactions</a>
+            </div>
+
+            <div>
+                <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
+            </div>
+
         </div>
+
     </header>
 
 
@@ -32,11 +36,11 @@
     <!-- Summary Board -->
     <div class="board summary">
         <div class="summary-top">
-            <h2>Month Overview</h2>
+            <h2 id="monthTitle">Month Overview</h2>
         </div>
        
         <div class="summary-mid">
-            <span class="summary-box">Current Balance</br></br>
+            <span class="summary-box">Current Balance
                 <span class="summary-number" id="balance-total"> $0 </span>
             </span>
             <div>
@@ -49,31 +53,33 @@
             </div>
             <div class="summary-box">Currency</br>
                 <div class="currencyFromInput">
-                <input id="fromInput" type="number" placeholder="From" required>
-                <select id="currencyFrom">
-                    <option value="USD">USD $</option>
-                    <option value="EUR">EUR €</option>
-                    <option value="MXN">MXN $</option>
-                    <option value="KRW">KRW ₩</option>
-                    <option value="JPY">JPY ¥</option>
-                    <option value="CNY">CNY ¥</option>
-                </select>
+                    <input id="fromInput" type="number" placeholder="From" required>
+                    <select id="currencyFrom">
+                        <option value="USD">USD $</option>
+                        <option value="EUR">EUR €</option>
+                        <option value="MXN">MXN $</option>
+                        <option value="KRW">KRW ₩</option>
+                        <option value="JPY">JPY ¥</option>
+                        <option value="CNY">CNY ¥</option>
+                    </select>
                 </div>
                 <div class="currencyToInput">
-                <label for="currencyTo">To </label>
-                <select id="currencyTo">
-                    <option value="USD">USD $</option>
-                    <option value="EUR">EUR €</option>
-                    <option value="MXN">MXN $</option>
-                    <option value="KRW">KRW ₩</option>
-                    <option value="JPY">JPY ¥</option>
-                    <option value="CNY">CNY ¥</option>
-                </select>
-                <span class="summary-number" id="currencyResult"> $1.00 </span>
+                    <div>
+                    <label for="currencyTo">To </label>
+                    <select id="currencyTo">
+                        <option value="USD">USD $</option>
+                        <option value="EUR">EUR €</option>
+                        <option value="MXN">MXN $</option>
+                        <option value="KRW">KRW ₩</option>
+                        <option value="JPY">JPY ¥</option>
+                        <option value="CNY">CNY ¥</option>
+                    </select>
+                    </div>
+                    <span class="summary-number" id="currencyResult"> 1.00 </span>
                 </div>
                 <div class="currency-btns">
-                <button id="convertBtn">Convert </button>
-                <button id="reverseBtn">⇆</button>
+                    <button id="convertBtn">Convert </button>
+                    <button id="reverseBtn">⇆</button>
                 </div>
             </div>
         </div>
@@ -87,7 +93,7 @@
                     <span class="summary-lowText" id="budgetLeft">Budget Left: $0</span>
                 </div>
                 <div class="bar">
-                    <i id="budgetBar" style="width: 0%; background: green"></i>
+                    <i id="budgetBar" style="width: 0%; background: rgb(73, 151, 73)"></i>
                 </div>
             </div>
 
@@ -103,31 +109,31 @@
         <h2>Spending By Category</h2>
         <span id="housingSpent">HOUSING: $0.00 </span>
         <div class="bar">
-            <i id="housingBar" style="width: 0%; background: red"></i>
+            <i id="housingBar" style="width: 0%; background: rgb(199, 79, 79)"></i>
         </div>
         <span id="billsSpent">BILLS: $0.00 </span>
         <div class="bar">
-            <i id="billsBar" style="width: 0%; background: orange"></i>
+            <i id="billsBar" style="width: 0%; background: rgb(224, 177, 90)"></i>
         </div>
         <span id="foodSpent">FOOD: $0.00 </span>
         <div class="bar">
-            <i id="foodBar" style="width: 0%; background: yellow"></i>
+            <i id="foodBar" style="width: 0%; background: rgb(233, 233, 87)"></i>
         </div>
         <span id="healthSpent">HEALTH: $0.00 </span>
         <div class="bar">
-            <i id="healthBar" style="width: 0%; background: green"></i>
+            <i id="healthBar" style="width: 0%; background: rgb(118, 235, 118)"></i>
         </div>
         <span id="transportSpent">TRANSPORT: $0.00 </span>
         <div class="bar">
-            <i id="transportBar" style="width: 0%; background: blue"></i>
+            <i id="transportBar" style="width: 0%; background: rgb(108, 108, 221)"></i>
         </div>
         <span id="entertainmentSpent">ENTERTAINMENT: $0.00 </span>
         <div class="bar">
-            <i id="entertainmentBar" style="width: 0%; background: purple"></i>
+            <i id="entertainmentBar" style="width: 0%; background: rgb(223, 112, 223)"></i>
         </div>
         <span id="otherSpent">OTHER: $0.00 </span>
         <div class="bar">
-            <i id="otherBar" style="width: 0%; background: violet"></i>
+            <i id="otherBar" style="width: 0%; background: rgb(128, 145, 137)"></i>
         </div>
 
 

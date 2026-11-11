@@ -87,13 +87,13 @@ document.getElementById("inputTransaction").addEventListener("submit", function(
         amount: amount
     };
 
-    createRow(transactionData);
-
     allTransactionData.push(transactionData);
     saveTransactions(allTransactionData);
     // console.log(allTransactionData);
 
     renderTransaction(filters);
+
+    event.target.reset();
 
 })
 
@@ -134,17 +134,17 @@ const saveTransactions = function(data){
     console.log("Transaction data saved");
 }
 
-const loadTransactions = function(){
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    // console.log(savedTransactions);
-    if (savedTransactions === null) {
-        return;
-    } else if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => createRow(data));
-    } else {
-        return;
-    }
-}
+// const loadTransactions = function(){
+//     const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+//     // console.log(savedTransactions);
+//     if (savedTransactions === null) {
+//         return;
+//     } else if (savedTransactions !== null) {
+//         savedTransactions.forEach((data) => createRow(data));
+//     } else {
+//         return;
+//     }
+// }
 
 
 // Budget Value - Input
@@ -157,6 +157,9 @@ document.getElementById("inputBudget").addEventListener("submit", function(event
     document.getElementById("currentBudget").textContent = budget;
 
     saveBudget(budget);
+
+    event.target.reset();
+
 })
 
 const saveBudget = function(data){
@@ -175,13 +178,7 @@ const loadBudget = function(data){
 }
 
 
-const loadData = function(){
-    loadTheme();
-    loadTransactions();
-    loadBudget();
-}
 
-loadData();
 
 // Clear Data
 
@@ -212,6 +209,8 @@ const renderTransaction = function(filter) {
         (filter.category === "all" || transaction.category === filter.category) && 
         (transaction.date >= filter.dateFrom && transaction.date <= filter.dateTo);
     })
+
+    filteredTransactions.sort((a, b) => b.date.localeCompare(a.date));
 
     const transRows = document.getElementById("transactionRows");
     transRows.innerHTML = "";
@@ -265,3 +264,13 @@ document.getElementById("filterBtn").addEventListener("click", (event) => {
     renderTransaction(filters);
 })
 
+
+
+const loadData = function(){
+    loadTheme();
+    // loadTransactions();
+    loadBudget();
+    renderTransaction(filters);
+}
+
+loadData();

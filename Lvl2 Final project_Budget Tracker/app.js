@@ -60,8 +60,30 @@ document.getElementById("contactForm").addEventListener("submit", function(event
 });
 
 
-// OVERVIEW DATA
+// MONTH OVERVIEW DATA
 
+const now = new Date();
+
+const renderMonthTitle = function () {
+    const monthName = now.toLocaleString("en-US", {month: "long"});
+    document.getElementById("monthTitle").textContent = `${monthName} Overview`;
+}
+
+const getMonthPrefix = function() {
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const realMonth = String(currentMonth + 1).padStart(2, "0")
+    return `${currentYear}/${realMonth}`;
+}
+
+const getMonthTransactions = function() {
+    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+
+    if (savedTransactions === null){
+        return [];
+    }
+    return savedTransactions.filter((data) => data.date.startsWith(getMonthPrefix()));
+}
 
 const loadBalance = function(data){
     const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
@@ -92,57 +114,43 @@ const loadBalance = function(data){
     }
 }
 
-const loadIncome = function(data){ //need to add account for month
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    let income = 0;
+const loadIncome = function(){ //need to add account for month
+    const savedTransactions = getMonthTransactions();
 
-    if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => {
-            if (data.type === "income") {
-                return income += parseFloat(data.amount);
-            }
-        });
-
-        document.getElementById("income-total").textContent = "$" + parseFloat(income);
-
-    } else {
-        return;
-    }
+            const income = savedTransactions.reduce((acc, data) => {
+                    if (data.type === "income") {
+                        return acc + parseFloat(data.amount);
+                    }
+                    return acc;
+        }, 0);
+        document.getElementById("income-total").textContent = "$" + income;
 }
 
 const loadSavings = function(data){
     const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    let savings = 0;
 
     if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => {
-            if (data.type === "savings") {
-                return savings += parseFloat(data.amount);
-            }
-        });
-
-        document.getElementById("savings-total").textContent = "$" + parseFloat(savings);
-    } else {
-        return;
-    }
+            const savings = savedTransactions.reduce((acc, data) => {
+                if (data.type === "savings") {
+                    return acc + parseFloat(data.amount);
+                }
+                return acc;
+            }, 0);
+            document.getElementById("savings-total").textContent = "$" + savings;
+        } else {
+            return;
+        }
 }
 
 const loadExpenses = function(data){
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    let expenses = 0;
-
-    if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => {
+    const savedTransactions = getMonthTransactions();
+        const expenses= savedTransactions.reduce((acc, data) => {
             if (data.type === "expense") {
-                return expenses += parseFloat(data.amount);
+                return acc + parseFloat(data.amount);
             }
-        });
-
-        document.getElementById("currentExpenses").textContent = "Expenses: $" + parseFloat(expenses);
-        
-    } else {
-        return;
-    }
+            return acc;
+        }, 0);
+        document.getElementById("currentExpenses").textContent = "Expenses: $" + expenses;
 }
 
 
@@ -157,15 +165,15 @@ const loadBudget = function(data){
 
 const loadBudgetLeft = function(data){
     const savedBudget = JSON.parse(localStorage.getItem("budgetData"));
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
-    let expenses = 0;
+    const savedTransactions = getMonthTransactions();
 
     if (savedBudget !== null && savedTransactions !== null) {
-        savedTransactions.forEach((data) => {
+        const expenses= savedTransactions.reduce((acc, data) => {
             if (data.type === "expense") {
-                return expenses += parseFloat(data.amount);
+                return acc + parseFloat(data.amount);
             }
-        });
+            return acc;
+        }, 0);
 
         const budgetLeft = savedBudget - expenses;
         document.getElementById("budgetLeft").textContent = "Budget Left: $" + budgetLeft;
@@ -173,6 +181,8 @@ const loadBudgetLeft = function(data){
         return;
     }
 }
+
+
 
 
 
@@ -214,25 +224,12 @@ const loadTransactions = function(){
     const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
     // console.log(savedTransactions);
     if (savedTransactions !== null) {
-        savedTransactions.forEach((data) => createRow(data));
+        savedTransactions.sort((a, b) => b.date.localeCompare(a.date));
+        savedTransactions.slice(0, 7).forEach((data) => createRow(data));
     } else {
         return;
     }
 }
-
-const loadData = function() {
-    loadTheme();
-    loadBalance();
-    loadIncome();
-    loadSavings();
-    loadExpenses();
-    loadBudget();
-    loadBudgetLeft();
-    loadTransactions();
-}
-
-loadData();
-
 
 
 // Show Bar by Category
@@ -241,7 +238,7 @@ const loadCat = function(){
     const categories = {housing: 0, bills: 0, food: 0, health: 0, transport: 0, entertainment: 0, other: 0};
 
 
-    const savedTransactions = JSON.parse(localStorage.getItem("transactionData"));
+    const savedTransactions = getMonthTransactions();
    
     if (savedTransactions === null) {
         return categories;
@@ -249,15 +246,13 @@ const loadCat = function(){
 
 
     savedTransactions.forEach((data) => {
-        if (data.type === "expense") {
-            categories[data.category] += parseFloat(data.amount);
-        }
+            if (data.type === "expense") {
+                categories[data.category] += parseFloat(data.amount);
+            }
     });
 
 
     return categories;
-
-
 }
 
 
@@ -287,10 +282,6 @@ const renderBudgetBar = function(){
 
 
     // console.log(savedBudget);
-
-
-
-
 }
 
 
@@ -300,21 +291,15 @@ const renderCategoryBars = function(){
 
     let totalExpense = Object.values(totals).reduce((acc, value) => acc + value, 0);
 
-
     // console.log(totalExpense);
 
-
     const percent = {};
-
 
     if (totalExpense === 0) {
         return;
     }
 
-
     for(const category in totals){
-
-
         percent[category] = totals[category] / totalExpense * 100;
         document.getElementById(`${category}Bar`).style.width = percent[category] + "%";
         document.getElementById(`${category}Spent`).textContent = `${category.toUpperCase()}: $${totals[category].toFixed(2)}`;
@@ -322,20 +307,14 @@ const renderCategoryBars = function(){
 
 
     // console.log(percent);
-
-
 }
-
-
-renderBudgetBar();
-renderCategoryBars();
 
 
 
 
 // Currency API
 
-let rates = {};
+let rates = [];
 
 async function safeFetch(url) {
     try {
@@ -419,5 +398,21 @@ document.getElementById("convertBtn").addEventListener('click', currencyInput)
 document.getElementById("reverseBtn").addEventListener('click', swapCurrency)
 
 
-loadFetch()
 
+const loadData = function() {
+    loadTheme();
+    loadBalance();
+    loadIncome();
+    loadSavings();
+    loadExpenses();
+    loadBudget();
+    loadBudgetLeft();
+    loadTransactions();
+    renderMonthTitle();
+
+    renderBudgetBar();
+    renderCategoryBars();
+    loadFetch();
+}
+
+loadData();

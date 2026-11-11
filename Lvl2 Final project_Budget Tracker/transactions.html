@@ -12,15 +12,20 @@
         <div class="header-left">
             <h1>Budget Tracker v01</h1>
         </div>
-    
-        <div class="header-center">
-            <a class="navBtn" href="index.html">Home</a>
-            <a class="navBtn" href="transactions.html">Transactions</a>
+   
+        <div class="header-right">
+
+            <div>
+                <a class="navBtn" href="index.html">Home</a>
+                <a class="navBtn" href="transactions.html">Transactions</a>
+            </div>
+
+            <div>
+                <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
+            </div>
+
         </div>
 
-        <div class="header-right">
-            <span class="themeBtn" id="themeBtn">🌙 Dark Mode</span>
-        </div>
     </header>
 
     <main class="layout" id="layout">
@@ -36,7 +41,7 @@
             <form class="inputTransaction" id="inputTransaction">
                 <div class="mid-box">
                     <div>
-                        <label for="type">Type</label>
+                        <label for="type">⚡ Type</label>
                         <select id="type">
                             <option value="expense">Expense</option>
                             <option value="income">Income</option>
@@ -44,28 +49,28 @@
                         </select>
                     </div>
                     <div>
-                        <label for="category">Category</label>
+                        <label for="category">📁 Category</label>
                         <select id="category">
+                            <option value="other">Other</option>
                             <option value="housing">Housing</option>
                             <option value="bills">Bills</option>
                             <option value="food">Food</option>
                             <option value="health">Health</option>
                             <option value="transport">Transport</option>
                             <option value="entertainment">Entertainment</option>
-                            <option value="other">Other</option>
                         </select>
                     </div>
                 </div>
 
-                <label for="date">Date </label>
+                <label for="date">🗓️ Date </label>
                 <input id="date" type="text" placeholder="YYYY/MM/DD" required>
 
-                <label for="description">Description </label>
+                <label for="description">📒 Description </label>
                 <input id="description" type="text" required>
 
 
 
-                <label for="amount">Amount ($)</label>
+                <label for="amount">🏷️ Amount ($)</label>
                 <input id="amount" type="number" required>
 
                 <div class="submit-button">
@@ -73,13 +78,12 @@
                 </div>
             </form>
             <form class="inputBudget" id="inputBudget">
-                <label for="budget">Budget: $<span id="currentBudget">0</span></label>
+                <label for="budget">🎯 Budget: $<span id="currentBudget">0</span></label>
                 <input id="budget" type="number" required>
                 <div class="submit-button">
                     <button type="submit">Submit</button>
                 </div>
             </form>
-            </span>
         </div>
 
     </div>
@@ -102,13 +106,13 @@
             <div class="filters">
                 <select id="catFilter">
                     <option value="all">All</option>
+                    <option value="other">Other</option>
                     <option value="housing">Housing</option>
                     <option value="bills">Bills</option>
                     <option value="food">Food</option>
                     <option value="health">Health</option>
                     <option value="transport">Transport</option>
                     <option value="entertainment">Entertainment</option>
-                    <option value="other">Other</option>
                 </select>
             </div>
             <div class="filters">
