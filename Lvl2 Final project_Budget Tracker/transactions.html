@@ -71,7 +71,7 @@
 
 
                 <label for="amount">🏷️ Amount ($)</label>
-                <input id="amount" type="float" required>
+                <input id="amount" type="number" step="0.01" required>
 
                 <div class="submit-button">
                     <button type="submit">Submit</button>
@@ -79,7 +79,7 @@
             </form>
             <form class="inputBudget" id="inputBudget">
                 <label for="budget">🎯 Budget: $<span id="currentBudget">0</span></label>
-                <input id="budget" type="float" required>
+                <input id="budget" type="number" step="0.01" required>
                 <div class="submit-button">
                     <button type="submit">Submit</button>
                 </div>
